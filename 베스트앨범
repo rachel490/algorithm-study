@@ -1,0 +1,37 @@
+def solution(genres, plays):
+    count = {}
+    genre_play = {}
+    answer = []
+    
+    for idx, (g, p) in enumerate(zip(genres,plays)):
+        genre_play[g] = genre_play.get(g,[]) + [(idx,p)]
+        count[g] = count.get(g,0) + p
+    
+    cnt = sorted(count.items(), key=lambda x: x[1],reverse=True)
+    
+    # print(count)
+    print(genre_play)
+    # print(cnt)
+    
+    for g,sum in cnt:
+        playlist = genre_play[g]
+        
+        playlist = sorted(playlist, key=lambda x:(-x[1],x[0]))
+        
+        for idx, song in playlist[:2]:
+            answer.append(idx)
+        
+    
+    return answer
+    
+    
+        
+
+# for idx, (genre, song) in enumerate(zip(genres, plays)):
+#         d[genre] = d.get(genre, []) + [(idx, song)]
+        
+# 어떤 형태로 해시에 저장하는 것이 좋을까?  
+#  ㄴ> 인덱스값을 잃지 않기 위해 튜플 형식으로 저장
+# 10000개 이하니깐 O(n^2)미만이어야함.
+# 각 분류별 리스트 안을 lambda이용해서 재생수, 고유번호순으로 정렬 => d[x][y][1], d[x][y][0] ? 인덱스 어떻게 접근해야할지 모르겠음... 
+# ㄴ> items 사용하면 key,value 튜플로 접근가능 -> lambda item[0] = key, item[1]=value
